@@ -1,9 +1,9 @@
-package excecoes;
+package exceptions;
 
 public class LimiteAtingidoException extends Exception {
 
 	public LimiteAtingidoException() {
-		super("N�o pode mais inserir pessoas. Limite atingido!");
+		super("Não é possível inserir pessoa. Limite atingido!");
 	}
 	
 }

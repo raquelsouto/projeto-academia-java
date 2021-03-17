@@ -25,7 +25,6 @@ public class Aluno extends Pessoa {
     @Override
     public String toString() {
         String out = "";
-      //Chama o toString da classe Pai (Pessoa) e soma com as informações específicas para Aluno
         out += super.toString();
         out += "Curso: " + curso.getNome() + "\n";
         out += "Código do curso: " + curso.getCodigo() + "\n"; 

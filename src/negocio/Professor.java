@@ -6,7 +6,7 @@ public class Professor extends Pessoa {
     
     public Professor() {
         super();
-        this.salario = 0.0;
+        this.salario = 0;
     }
 
     public Professor(String nome, String cpf, int idade, double salario) {
@@ -24,11 +24,7 @@ public class Professor extends Pessoa {
     
     @Override
     public String toString() {
-      //Chama o toString da classe Pai (Pessoa) e soma com as informações específicas para Professor
-        String out = "";
-        out += super.toString();
-        out += "Salário: R$ " + salario + "\n";
-        return out;
+        return super.toString() + "Salário: R$ " + salario + "\n";
     }
 }
 

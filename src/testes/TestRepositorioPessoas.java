@@ -1,7 +1,9 @@
-package dados;
+package testes;
 
-import excecoes.CpfInexistenteException;
-import excecoes.LimiteAtingidoException;
+import dados.RepositorioPessoasLista;
+import exceptions.CPFInexistenteException;
+import exceptions.CPFInvalidoException;
+import exceptions.LimiteAtingidoException;
 import negocio.Aluno;
 import negocio.Curso;
 import negocio.Pessoa;
@@ -10,11 +12,11 @@ import negocio.RepositorioPessoas;
 
 public class TestRepositorioPessoas {
 
-	public static void main(String[] args) throws LimiteAtingidoException, CpfInexistenteException {
+	public static void main(String[] args) throws LimiteAtingidoException, CPFInexistenteException, CPFInvalidoException {
 		
 		Curso curso1 = new Curso(15, "Sistemas");
 		Curso curso2 = new Curso(99, "Medicina");
-        Curso curso3 = new Curso(60, "Engenharia Elétrica");
+        Curso curso3 = new Curso(60, "Engenharia Elï¿½trica");
         
 		
 		System.out.println(curso1.getNome());
@@ -24,12 +26,12 @@ public class TestRepositorioPessoas {
         Pessoa p2 = new Aluno("Bruno", "74185226315", 31, curso2);
         Pessoa p5 = new Aluno("Esther", "15664647896", 19, curso3);
         
-        Pessoa p3 = new Professor("Maria Júlia", "78911145630", 34, 3520.50);
+        Pessoa p3 = new Professor("Maria Jï¿½lia", "78911145630", 34, 3520.50);
         Pessoa p4 = new Professor("Rubem", "00094578911", 37, 4450.80);
 		
 		//RepositorioPessoas rep = new RepositorioPessoasArray(5);
         
-		RepositorioPessoas rep = new RepositorioPessoasList();
+		RepositorioPessoas rep = new RepositorioPessoasLista();
 		
 		try {
 			rep.inserir(p1);
@@ -67,13 +69,13 @@ public class TestRepositorioPessoas {
 		
 		try {
 			System.out.println(rep.procurar("74185226315"));
-		} catch (CpfInexistenteException e) {
+		} catch (CPFInexistenteException e) {
 			e.printStackTrace();
 		}
 		
 		try {
 			System.out.println(rep.procurar("00094578911"));
-		} catch (CpfInexistenteException e) {
+		} catch (CPFInexistenteException e) {
 			e.printStackTrace();
 		}
 		
@@ -81,13 +83,13 @@ public class TestRepositorioPessoas {
 		
 		try {
 			rep.remover("12345687112");
-		} catch (CpfInexistenteException e) {
+		} catch (CPFInexistenteException e) {
 			e.printStackTrace();
 		}
 		
 		try {
 			rep.remover("15664647896");
-		} catch (CpfInexistenteException e) {
+		} catch (CPFInexistenteException e) {
 			e.printStackTrace();
 		}
 		System.out.println(rep.toString());

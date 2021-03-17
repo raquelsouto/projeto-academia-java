@@ -1,60 +1,47 @@
 package dados;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import exceptions.CPFInexistenteException;
 import exceptions.CPFInvalidoException;
-import exceptions.LimiteAtingidoException;
 import negocio.Aluno;
 import negocio.Pessoa;
 import negocio.Professor;
 import negocio.RepositorioPessoas;
 
-public class RepositorioPessoasArray implements RepositorioPessoas {
+public class RepositorioPessoasLista implements RepositorioPessoas {
 	
-	private Pessoa[] pessoas;
-    private int indice;
+	private List<Pessoa> pessoas; 
 	
-	public RepositorioPessoasArray(int tamanho) {
-        this.pessoas = new Pessoa[tamanho];
-		this.indice = 0;
-	}
-	
-	public void inserir(Pessoa pessoa) throws LimiteAtingidoException {
-		if (indice == this.pessoas.length) {
-            throw new LimiteAtingidoException();
-        }
+    public RepositorioPessoasLista() {
+        this.pessoas = new ArrayList<Pessoa>();
+    }
 
-        this.pessoas[indice] = pessoa;
-		indice++;
+    @Override
+	public void inserir(Pessoa pessoa) {
+		pessoas.add(pessoa);
 	}
 	
+    @Override
 	public Pessoa procurar(String cpf) throws CPFInexistenteException, CPFInvalidoException {
 		String cpfCorrigido = corrigirCpf(cpf);
-		
-        for (int i = 0; i < indice; i++) {
-			if (pessoas[i].getCpf().equals(cpfCorrigido)) {
-				return pessoas[i];
+
+		for (Pessoa pessoa : pessoas) {
+			if (pessoa.getCpf().equals(cpfCorrigido)) {
+				return pessoa;
 			}
 		}
-
-		throw new CPFInexistenteException();
+		
+        throw new CPFInexistenteException();
 	}
 	
+    @Override
 	public void remover(String cpf) throws CPFInexistenteException, CPFInvalidoException {
-		boolean pessoaEncontrada = false;
-        String cpfCorrigido = corrigirCpf(cpf);
-        
-        for (int i = 0; i < pessoas.length; i++) {
-            if (pessoas[i] != null && pessoas[i].getCpf().equals(cpfCorrigido)) {
-                pessoaEncontrada = true;
-            	pessoas[i] = pessoas[indice - 1];
-                pessoas[indice - 1] = null; 
-                indice--;
-            } 
-        }
-        if (!pessoaEncontrada) {
-			throw new CPFInexistenteException();
-		}
-    }
+		Pessoa p = procurar(cpf);
+		pessoas.remove(p);
+	}
+	
 	
 	private String corrigirCpf(String cpf) throws CPFInvalidoException {
         String cpfCorrigido = cpf.replaceAll("[./-]", "");
@@ -67,12 +54,11 @@ public class RepositorioPessoasArray implements RepositorioPessoas {
         return cpfCorrigido;
     }
 	
-	@Override
+    @Override
     public String toString() {
         String out = "";
 
-        out+="\n---------------- Lista de Pessoas ----------------\n ";
-        
+        out += "\n---------------- Lista de Pessoas ----------------\n ";
         for (Pessoa pessoa : pessoas) {
             if (pessoa != null) {
                 out += "\n====================================\n";
@@ -87,7 +73,6 @@ public class RepositorioPessoasArray implements RepositorioPessoas {
                 out += "====================================\n";
             }
         } 
-        
         return out;
 	}
 

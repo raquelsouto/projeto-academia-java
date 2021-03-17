@@ -31,4 +31,9 @@ public class Curso {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Override
+	public String toString() {
+		return "Código: " + codigo + "\nNome: " + nome + "\n";
+	}
 }
