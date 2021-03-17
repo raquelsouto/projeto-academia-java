@@ -1,9 +1,12 @@
 package negocio;
 
-public interface RepositorioPessoas {
-    
-    void inserir(Pessoa pessoa);
-    Pessoa procurar(String numCpf);
-    void remover(String numCPF);
+import excecoes.CpfInexistenteException;
+import excecoes.LimiteAtingidoException;
 
+public interface RepositorioPessoas {
+
+	void inserir(Pessoa pessoa) throws LimiteAtingidoException;
+	Pessoa procurar(String numCPF) throws CpfInexistenteException;
+	void remover(String numCPF) throws CpfInexistenteException;
+	
 }

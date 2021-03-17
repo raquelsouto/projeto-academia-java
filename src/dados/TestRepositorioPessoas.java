@@ -1,5 +1,7 @@
 package dados;
 
+import excecoes.CpfInexistenteException;
+import excecoes.LimiteAtingidoException;
 import negocio.Aluno;
 import negocio.Curso;
 import negocio.Pessoa;
@@ -8,34 +10,88 @@ import negocio.RepositorioPessoas;
 
 public class TestRepositorioPessoas {
 
-    public static void main(String[] args) {
-
-        Curso curso1 = new Curso(75.6, "Sistemas de InformaÃ§Ã£o");
-        Curso curso2 = new Curso(99, "Engenharia Civil");
-
-        Pessoa p1 = new Aluno("Juliana", "12345687112", 30, curso1);
+	public static void main(String[] args) throws LimiteAtingidoException, CpfInexistenteException {
+		
+		Curso curso1 = new Curso(15, "Sistemas");
+		Curso curso2 = new Curso(99, "Medicina");
+        Curso curso3 = new Curso(60, "Engenharia Elétrica");
+        
+		
+		System.out.println(curso1.getNome());
+		System.out.println(curso1.getCodigo());
+		
+		Pessoa p1 = new Aluno("Juliana", "12345687112", 30, curso1);
         Pessoa p2 = new Aluno("Bruno", "74185226315", 31, curso2);
-
-        Pessoa p3 = new Professor("Maria JÃºlia", "78911145630", 34, 3520.50);
+        Pessoa p5 = new Aluno("Esther", "15664647896", 19, curso3);
+        
+        Pessoa p3 = new Professor("Maria Júlia", "78911145630", 34, 3520.50);
         Pessoa p4 = new Professor("Rubem", "00094578911", 37, 4450.80);
-
-        RepositorioPessoas rep = new RepositorioPessoasArray(5);
-        //RepositorioPessoas rep = new RepositorioPessoasList();
-
-        rep.inserir(p1);
-        rep.inserir(p2);
-        rep.inserir(p3);
-        rep.inserir(p4);
-        System.out.println(rep.toString());
-
-        System.out.println("\nPROCURANDO PESSOAS...\n");
-        System.out.println(rep.procurar("123.456 . 871 - 12"));
-        System.out.println(rep.procurar(" 000945789-11"));
-        System.out.println(rep.procurar(" 000536124-11"));
-
-        System.out.println("\nREMOVENDO PESSOAS...");
-        rep.remover("123.456.871-12");
-        System.out.println(rep.toString());
-    }
+		
+		//RepositorioPessoas rep = new RepositorioPessoasArray(5);
+        
+		RepositorioPessoas rep = new RepositorioPessoasList();
+		
+		try {
+			rep.inserir(p1);
+		} catch (LimiteAtingidoException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			rep.inserir(p2);
+		} catch (LimiteAtingidoException e) {
+			e.printStackTrace();
+		}
+		try {
+			rep.inserir(p5);
+		} catch (LimiteAtingidoException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			rep.inserir(p3);
+		} catch (LimiteAtingidoException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			rep.inserir(p4);
+		} catch (LimiteAtingidoException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(rep.toString());
+		
+		
+		System.out.println("\n\nPROCURANDO PESSOAS...\n");
+		
+		try {
+			System.out.println(rep.procurar("74185226315"));
+		} catch (CpfInexistenteException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			System.out.println(rep.procurar("00094578911"));
+		} catch (CpfInexistenteException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("\n\nREMOVENDO PESSOAS...\n");
+		
+		try {
+			rep.remover("12345687112");
+		} catch (CpfInexistenteException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			rep.remover("15664647896");
+		} catch (CpfInexistenteException e) {
+			e.printStackTrace();
+		}
+		System.out.println(rep.toString());
+		
+	}
 
 }
