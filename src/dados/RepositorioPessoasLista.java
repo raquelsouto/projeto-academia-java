@@ -3,7 +3,6 @@ package dados;
 import java.util.ArrayList;
 import java.util.List;
 
-import exceptions.CPFInexistenteException;
 import exceptions.CPFInvalidoException;
 import negocio.Aluno;
 import negocio.Pessoa;
@@ -24,7 +23,7 @@ public class RepositorioPessoasLista implements RepositorioPessoas {
 	}
 	
     @Override
-	public Pessoa procurar(String cpf) throws CPFInexistenteException, CPFInvalidoException {
+	public Pessoa procurar(String cpf) throws CPFInvalidoException {
 		String cpfCorrigido = corrigirCpf(cpf);
 
 		for (Pessoa pessoa : pessoas) {
@@ -33,47 +32,41 @@ public class RepositorioPessoasLista implements RepositorioPessoas {
 			}
 		}
 		
-        throw new CPFInexistenteException();
+        throw new CPFInvalidoException("o CPF não está cadastrado.");
 	}
 	
     @Override
-	public void remover(String cpf) throws CPFInexistenteException, CPFInvalidoException {
+	public void remover(String cpf) throws CPFInvalidoException {
 		Pessoa p = procurar(cpf);
 		pessoas.remove(p);
 	}
 	
-	
-	private String corrigirCpf(String cpf) throws CPFInvalidoException {
+    public String listarPessoas() {	
+    	String out = "";
+
+        for (Pessoa pessoa : pessoas) {
+            if (pessoa != null) {
+                if (pessoa instanceof Aluno) {
+                    Aluno a = (Aluno) pessoa;
+                    out += a.toString();
+                } else if (pessoa instanceof Professor) {
+                    Professor p = (Professor) pessoa;
+                    out += p.toString();
+                }
+            }
+        } 
+        
+        return out;
+	}
+
+    private String corrigirCpf(String cpf) throws CPFInvalidoException {
         String cpfCorrigido = cpf.replaceAll("[./-]", "");
         cpfCorrigido = cpfCorrigido.replaceAll("\\s+","");
 
         if (cpfCorrigido.length() != 11) {
-            throw new CPFInvalidoException();
+            throw new CPFInvalidoException("o CPF precisa conter 11 números.");
         }
         
         return cpfCorrigido;
     }
-	
-    @Override
-    public String toString() {
-        String out = "";
-
-        out += "\n---------------- Lista de Pessoas ----------------\n ";
-        for (Pessoa pessoa : pessoas) {
-            if (pessoa != null) {
-                out += "\n====================================\n";
-                if (pessoa instanceof Aluno) {
-                    Aluno al = (Aluno)pessoa;
-                    out += al.toString();
-                } else if (pessoa instanceof Professor) {
-                    Professor pf = (Professor)pessoa;
-                    out += pf.toString();
-                }
-                
-                out += "====================================\n";
-            }
-        } 
-        return out;
-	}
-
 }

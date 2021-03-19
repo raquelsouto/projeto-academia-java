@@ -6,7 +6,6 @@ public class Curso {
     private String nome;
     
     public Curso() {
-        super();
         this.codigo = 0.0;
         this.nome = null;
     }
@@ -34,6 +33,6 @@ public class Curso {
 
     @Override
 	public String toString() {
-		return "Código: " + codigo + "\nNome: " + nome + "\n";
+		return "Código: " + this.getCodigo() + "\nNome: " + this.getNome() + "\n";
 	}
 }

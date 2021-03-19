@@ -45,11 +45,7 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        String out = "";
-        out += "Nome do aluno: " + nome + "\n";
-        out += "CPF: " + cpf + "\n";
-        out += "Idade: " + idade + "\n"; 
-        return out;
+    	return "Nome: " + this.getNome() + "\nCPF: " + this.getCpf() + "\nIdade: " + this.getIdade() + "\n";
     }
 
 

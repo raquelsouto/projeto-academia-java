@@ -24,11 +24,7 @@ public class Aluno extends Pessoa {
 
     @Override
     public String toString() {
-        String out = "";
-        out += super.toString();
-        out += "Curso: " + curso.getNome() + "\n";
-        out += "Código do curso: " + curso.getCodigo() + "\n"; 
-        return out;
+    	return super.toString() + "Curso: " + this.getCurso().getNome() + "\n";
     }
 }
 

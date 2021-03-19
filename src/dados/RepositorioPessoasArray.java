@@ -1,6 +1,5 @@
 package dados;
 
-import exceptions.CPFInexistenteException;
 import exceptions.CPFInvalidoException;
 import exceptions.LimiteAtingidoException;
 import negocio.Aluno;
@@ -18,6 +17,7 @@ public class RepositorioPessoasArray implements RepositorioPessoas {
 		this.indice = 0;
 	}
 	
+	@Override
 	public void inserir(Pessoa pessoa) throws LimiteAtingidoException {
 		if (indice == this.pessoas.length) {
             throw new LimiteAtingidoException();
@@ -27,7 +27,8 @@ public class RepositorioPessoasArray implements RepositorioPessoas {
 		indice++;
 	}
 	
-	public Pessoa procurar(String cpf) throws CPFInexistenteException, CPFInvalidoException {
+	@Override
+	public Pessoa procurar(String cpf) throws CPFInvalidoException {
 		String cpfCorrigido = corrigirCpf(cpf);
 		
         for (int i = 0; i < indice; i++) {
@@ -36,10 +37,11 @@ public class RepositorioPessoasArray implements RepositorioPessoas {
 			}
 		}
 
-		throw new CPFInexistenteException();
+		throw new CPFInvalidoException("o CPF não está cadastrado.");
 	}
 	
-	public void remover(String cpf) throws CPFInexistenteException, CPFInvalidoException {
+	@Override
+	public void remover(String cpf) throws CPFInvalidoException {
 		boolean pessoaEncontrada = false;
         String cpfCorrigido = corrigirCpf(cpf);
         
@@ -51,44 +53,40 @@ public class RepositorioPessoasArray implements RepositorioPessoas {
                 indice--;
             } 
         }
+        
         if (!pessoaEncontrada) {
-			throw new CPFInexistenteException();
+			throw new CPFInvalidoException("o CPF não está cadastrado.");
 		}
     }
+	
+	@Override
+    public String toString() {
+		String out = "";
+
+        for (Pessoa pessoa : pessoas) {
+            if (pessoa != null) {
+                if (pessoa instanceof Aluno) {
+                    Aluno a = (Aluno) pessoa;
+                    out += a.toString();
+                } else if (pessoa instanceof Professor) {
+                    Professor p = (Professor) pessoa;
+                    out += p.toString();
+                }
+            }
+        } 
+        
+        return out;
+	}
 	
 	private String corrigirCpf(String cpf) throws CPFInvalidoException {
         String cpfCorrigido = cpf.replaceAll("[./-]", "");
         cpfCorrigido = cpfCorrigido.replaceAll("\\s+","");
 
         if (cpfCorrigido.length() != 11) {
-            throw new CPFInvalidoException();
+            throw new CPFInvalidoException("o CPF precisa conter 11 números.");
         }
         
         return cpfCorrigido;
     }
-	
-	@Override
-    public String toString() {
-        String out = "";
-
-        out+="\n---------------- Lista de Pessoas ----------------\n ";
-        
-        for (Pessoa pessoa : pessoas) {
-            if (pessoa != null) {
-                out += "\n====================================\n";
-                if (pessoa instanceof Aluno) {
-                    Aluno al = (Aluno)pessoa;
-                    out += al.toString();
-                } else if (pessoa instanceof Professor) {
-                    Professor pf = (Professor)pessoa;
-                    out += pf.toString();
-                }
-                
-                out += "====================================\n";
-            }
-        } 
-        
-        return out;
-	}
 
 }

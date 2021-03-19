@@ -1,7 +1,6 @@
-package testes;
+package exec;
 
 import dados.RepositorioPessoasLista;
-import exceptions.CPFInexistenteException;
 import exceptions.CPFInvalidoException;
 import exceptions.LimiteAtingidoException;
 import negocio.Aluno;
@@ -12,7 +11,7 @@ import negocio.RepositorioPessoas;
 
 public class TestRepositorioPessoas {
 
-	public static void main(String[] args) throws LimiteAtingidoException, CPFInexistenteException, CPFInvalidoException {
+	public static void main(String[] args) throws LimiteAtingidoException, CPFInvalidoException {
 		
 		Curso curso1 = new Curso(15, "Sistemas");
 		Curso curso2 = new Curso(99, "Medicina");
@@ -69,13 +68,13 @@ public class TestRepositorioPessoas {
 		
 		try {
 			System.out.println(rep.procurar("74185226315"));
-		} catch (CPFInexistenteException e) {
+		} catch (CPFInvalidoException e) {
 			e.printStackTrace();
 		}
 		
 		try {
 			System.out.println(rep.procurar("00094578911"));
-		} catch (CPFInexistenteException e) {
+		} catch (CPFInvalidoException e) {
 			e.printStackTrace();
 		}
 		
@@ -83,13 +82,13 @@ public class TestRepositorioPessoas {
 		
 		try {
 			rep.remover("12345687112");
-		} catch (CPFInexistenteException e) {
+		} catch (CPFInvalidoException e) {
 			e.printStackTrace();
 		}
 		
 		try {
 			rep.remover("15664647896");
-		} catch (CPFInexistenteException e) {
+		} catch (CPFInvalidoException e) {
 			e.printStackTrace();
 		}
 		System.out.println(rep.toString());

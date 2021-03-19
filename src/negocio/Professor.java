@@ -24,7 +24,7 @@ public class Professor extends Pessoa {
     
     @Override
     public String toString() {
-        return super.toString() + "Salário: R$ " + salario + "\n";
+        return super.toString() + "Salário: R$ " + this.getSalario() + "\n";
     }
 }
 
