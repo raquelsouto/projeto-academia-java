@@ -31,8 +31,10 @@ public class RepositorioCursoDAO {
 			stmt.close();
 
 			System.out.println("Gravado!");
+
 		} catch (SQLIntegrityConstraintViolationException s) {
 			throw new CodigoInvalidoException("o curso já está cadastrado.");
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -52,7 +54,7 @@ public class RepositorioCursoDAO {
 
 			stmt.close();
 			rs.close();
-			
+
 			throw new CodigoInvalidoException("o curso não está cadastrado.");
 		} catch (SQLException e) {
 			throw new RuntimeException();
@@ -67,8 +69,10 @@ public class RepositorioCursoDAO {
 			stmt.setDouble(1, codigo);
 			stmt.execute();
 			stmt.close();
+
 		} catch (SQLIntegrityConstraintViolationException s) {
 			throw new CodigoInvalidoException("não é possível remover curso.");
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

@@ -2,7 +2,9 @@ package exceptions;
 
 public class CPFInvalidoException extends Exception {
 
-	public CPFInvalidoException() {
+    private static final long serialVersionUID = 1L;
+
+    public CPFInvalidoException() {
 		super("CPF inválido.");
 	}
 	

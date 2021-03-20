@@ -14,7 +14,7 @@ import exceptions.CodigoInvalidoException;
 import negocio.Aluno;
 
 public class RepositorioAlunosDAO {
-	
+
 	private Connection con = null;
 	private RepositorioCursoDAO repCurso;
 
@@ -39,6 +39,7 @@ public class RepositorioAlunosDAO {
 
 		} catch (SQLIntegrityConstraintViolationException s) {
 			throw new CPFInvalidoException("o CPF já está cadastrado.");
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -53,7 +54,8 @@ public class RepositorioAlunosDAO {
 			ResultSet rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				return new Aluno(rs.getString("Nome"), rs.getString("Cpf"), rs.getInt("Idade"), repCurso.procurar(rs.getDouble("CodigoCurso")));
+				return new Aluno(rs.getString("Nome"), rs.getString("Cpf"), rs.getInt("Idade"),
+						repCurso.procurar(rs.getDouble("CodigoCurso")));
 			}
 
 			stmt.close();
@@ -73,14 +75,13 @@ public class RepositorioAlunosDAO {
 			stmt.setString(1, cpf);
 			stmt.execute();
 			stmt.close();
-			
-			
+
 		} catch (SQLIntegrityConstraintViolationException s) {
 			throw new CPFInvalidoException("o CPF não está cadastrado.");
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-
 	}
 
 	public List<Aluno> getAlunos() throws CodigoInvalidoException {
@@ -92,7 +93,8 @@ public class RepositorioAlunosDAO {
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				Aluno a = new Aluno(rs.getString("Nome"), rs.getString("Cpf"), rs.getInt("Idade"), repCurso.procurar(rs.getDouble("CodigoCurso")));
+				Aluno a = new Aluno(rs.getString("Nome"), rs.getString("Cpf"), rs.getInt("Idade"),
+						repCurso.procurar(rs.getDouble("CodigoCurso")));
 				alunos.add(a);
 			}
 

@@ -2,6 +2,8 @@ package exceptions;
 
 public class CodigoInvalidoException extends Exception {
 	
+	private static final long serialVersionUID = 1L;
+
 	public CodigoInvalidoException() {
 		super("Código do curso inválido.");
 	}

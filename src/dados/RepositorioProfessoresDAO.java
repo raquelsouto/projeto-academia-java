@@ -71,8 +71,10 @@ public class RepositorioProfessoresDAO {
 			stmt.setString(1, cpf);
 			stmt.execute();
 			stmt.close();
+
 		} catch (SQLIntegrityConstraintViolationException s) {
 			throw new CPFInvalidoException("o CPF já está cadastrado.");
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -88,7 +90,8 @@ public class RepositorioProfessoresDAO {
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				Professor p = new Professor(rs.getString("Nome"), rs.getString("Cpf"), rs.getInt("Idade"), rs.getDouble("Salario"));
+				Professor p = new Professor(rs.getString("Nome"), rs.getString("Cpf"), rs.getInt("Idade"),
+						rs.getDouble("Salario"));
 				professores.add(p);
 			}
 
